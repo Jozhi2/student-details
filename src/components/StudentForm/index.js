@@ -5,9 +5,12 @@ import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 //Redux
 import { useDispatch } from 'react-redux';
 import { addStudentAction } from '../../actions/studentActions';
+import ModalConfirmation from '../ModalConfirmation';
 
 const StudentForm = () => {
     const [validated, setValidated] = useState(false);
+    const [modalShow, setModalShow] = useState(false);
+
     
     const dispatch = useDispatch();
 
@@ -28,6 +31,7 @@ const StudentForm = () => {
             const addStudent = (student) => dispatch( addStudentAction(student) );
             addStudent({studentsInfo}).then(()=>{
                 document.getElementById("studentForm").reset();
+                setModalShow(true)
                 setValidated(false);
             })
             // props.getStudentsInfo(studentsInfo)
@@ -93,6 +97,10 @@ const StudentForm = () => {
                     </Form>
                 </Col>
             </Row>
+            <ModalConfirmation
+                show={modalShow}
+                onHide={() => setModalShow(false)}
+            />
         </Container>
     );
 }
